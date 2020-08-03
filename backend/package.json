@@ -4,18 +4,22 @@
   "description": "A tumblr clone",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "dotenv nodemon ./bin/www"
   },
   "author": "Ben Anderson",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "http-errors": "^1.8.0",
     "pg": "^8.3.0",
     "sequelize": "^5.22.3"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "dotenv-cli": "^3.2.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
     "sequelize-cli": "^5.5.1"
   }
 }
