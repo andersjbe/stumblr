@@ -3,12 +3,14 @@ const userRoutes = require('./routes/users')
 const express = require('express');
 const moragn = require('morgan');
 const createError = require('http-errors');
+const cors = require('cors');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(moragn('dev'));
+app.use(cors({ origin: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', userRoutes)
