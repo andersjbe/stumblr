@@ -19,7 +19,7 @@ export const login = (username, password) => async dispatch => {
 };
 
 export const signup = (username, password) => async dispatch => {
-	const res = await fetch(`${apiUrl}/users`, {
+	const res = await fetch(`${imageUrl}/users`, {
 		method: 'post',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username, password }),
