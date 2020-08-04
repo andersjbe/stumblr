@@ -1,4 +1,4 @@
-const userRoutes = require('./routes/users')
+const userRoutes = require('./routes/users');
 
 const express = require('express');
 const moragn = require('morgan');
@@ -13,7 +13,15 @@ app.use(moragn('dev'));
 app.use(cors({ origin: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', userRoutes)
+app.use('/users', userRoutes);
+
+// server's app.js
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('frontend/build'));
+	app.get('/', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+	});
+}
 
 app.use((req, res, next) => {
 	next(createError(404));

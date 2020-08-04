@@ -1,11 +1,11 @@
-import { apiUrl } from '../config';
+import { imageUrl } from '../config';
 
 const SET_TOKEN = 'stumblr/auth/GET_TOKEN';
 const TOKEN_KEY = 'stumblr/auth/TOKEN_KEY';
 // const REMOVE_TOKEN = 'stumblr/auth/REMOVE_TOKEN';
 
 export const login = (username, password) => async dispatch => {
-	const res = await fetch(`${apiUrl}/users/login`, {
+	const res = await fetch(`${imageUrl}/users/login`, {
 		method: 'post',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username, password }),
