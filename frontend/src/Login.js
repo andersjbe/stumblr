@@ -2,32 +2,48 @@ import { login, signup } from './store/auth';
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { TextField, ButtonGroup, Button } from '@material-ui/core';
 
 export default props => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
 
-	const onSubmit = e => {
+	const logIn = e => {
 		e.preventDefault();
 		dispatch(login(username, password));
-    };
-    
-    const signUp = e => {
-        e.preventDefault();
-        dispatch(signup(username, password))
-    }
+	};
+
+	const signUp = e => {
+		e.preventDefault();
+		dispatch(signup(username, password));
+	};
 
 	return (
-		<form onSubmit={onSubmit}>
-			<label htmlFor='username'>Username</label>
-			<input name='username' value={username} onChange={e => setUsername(e.target.value)} required />
+		<form>
 
-			<label htmlFor='password'>Password</label>
-			<input name='password' value={password} onChange={e => setPassword(e.target.value)} required />
+			<TextField
+				id='username'
+				label='username'
+				variant='outlined'
+				value={username}
+				onChange={e => setUsername(e.target.value)}
+				required
+			/>
 
-            <button type='submit' id='login' >submit</button>
-            <button id='sign-up' onClick={signUp}>Sign Up</button>
+			<TextField
+				id='password'
+				label='password'
+				variant='outlined'
+				value={password}
+				onChange={e => setPassword(e.target.value)}
+				required
+			/>			
+
+			<ButtonGroup variant="contained" color="primary">
+				<Button onClick={logIn}>Log In</Button>
+				<Button onClick={signUp}>Sign Up</Button>
+			</ButtonGroup>
 		</form>
 	);
 };
