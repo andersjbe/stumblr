@@ -6,7 +6,7 @@ export const TOKEN_KEY = 'stumblr/auth/TOKEN_KEY';
 console.log(imageUrl);
 
 export const login = (username, password) => async dispatch => {
-	const res = await fetch(`${imageUrl}/users/login`, {
+	const res = await fetch(`${imageUrl}/api/users/login`, {
 		method: 'post',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username, password }),
@@ -22,7 +22,7 @@ export const login = (username, password) => async dispatch => {
 };
 
 export const signup = (username, password) => async dispatch => {
-	const res = await fetch(`${imageUrl}/users`, {
+	const res = await fetch(`${imageUrl}/api/users`, {
 		method: 'post',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username, password }),
