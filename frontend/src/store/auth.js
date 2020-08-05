@@ -1,8 +1,9 @@
 import { imageUrl } from '../config';
 
-const SET_TOKEN = 'stumblr/auth/GET_TOKEN';
-const TOKEN_KEY = 'stumblr/auth/TOKEN_KEY';
+export const SET_TOKEN = 'stumblr/auth/GET_TOKEN';
+export const TOKEN_KEY = 'stumblr/auth/TOKEN_KEY';
 // const REMOVE_TOKEN = 'stumblr/auth/REMOVE_TOKEN';
+console.log(imageUrl);
 
 export const login = (username, password) => async dispatch => {
 	const res = await fetch(`${imageUrl}/users/login`, {
@@ -15,6 +16,8 @@ export const login = (username, password) => async dispatch => {
 		const data = await res.json();
 		window.localStorage.setItem(TOKEN_KEY, data.token);
 		dispatch(setToken(data.token, data.userId));
+	} else {
+		console.log(res)
 	}
 };
 
