@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(moragn('dev'));
+if (process.env.NODE_ENV !== 'production') app.use(moragn('dev'));
 app.use(cors({ origin: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
 
