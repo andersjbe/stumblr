@@ -7,11 +7,10 @@ const cors = require('cors');
 
 const app = express();
 
+app.use(cors({ origin: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_ENV !== 'production') app.use(moragn('dev'));
-app.use(cors({ origin: true }));
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRoutes);
 

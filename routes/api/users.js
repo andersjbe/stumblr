@@ -1,5 +1,5 @@
-const { User } = require('../db/models');
-const { authenticated, createToken } = require('../utils/auth');
+const { User } = require('../../db/models');
+const { authenticated, createToken } = require('../../utils/auth');
 
 const express = require('express');
 const asyncHandler = require('express-async-handler');
@@ -22,7 +22,16 @@ router.get(
 	'/',
 	asyncHandler(async (req, res) => {
 		const users = await User.findAll();
-		res.json(users);
+		// console.log(users)
+
+		const formatted = users.reduce((acc, user) => {
+
+			user = user.dataValues
+			// console.log(user)
+			acc[user.id] = { id: user.id, username: user.username, }
+			return acc;
+		}, {})
+		res.json(formatted);
 	})
 );
 

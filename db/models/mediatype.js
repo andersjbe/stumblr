@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const MediaType = sequelize.define('MediaType', {
     type: DataTypes.STRING
-  }, {});
+  }, {timestamps: false});
   MediaType.associate = function(models) {
-    // associations can be defined here
+    MediaType.hasMany(models.Post, { foreignKey: 'mediaTypeId' })
   };
   return MediaType;
 };

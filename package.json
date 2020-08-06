@@ -21,6 +21,7 @@
 	"author": "Ben Anderson",
 	"license": "ISC",
 	"dependencies": {
+		"aws-sdk": "^2.727.1",
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
@@ -30,7 +31,10 @@
 		"express-validator": "^6.6.1",
 		"http-errors": "^1.8.0",
 		"jsonwebtoken": "^8.5.1",
+		"material-ui-dropzone": "^3.3.1",
 		"morgan": "^1.10.0",
+		"multer": "^1.4.2",
+		"multer-s3": "^2.9.0",
 		"pg": "^8.3.0",
 		"sequelize": "^5.22.3",
 		"uuid": "^8.3.0"
