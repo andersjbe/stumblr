@@ -1,4 +1,8 @@
-import React from 'react';
+import { fetchPosts } from './store/posts';
+import { fetchUsers } from './store/users';
+import PostForm from './PostForm';
+
+import React, { useEffect } from 'react';
 import {
 	Card,
 	CardHeader,
@@ -11,24 +15,31 @@ import {
 	Divider,
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
 
 const madeStyles = makeStyles({
-	root: {
+	// root: {
+	// 	background: '#001935',
+	// 	width: '100vw',
+	// 	height: '100vw',
+	// 	margin: '0',
+	// 	padding: '0',
+	// },
+	card: {
 		maxWidth: 540,
-		// background: '#001935'
+		'margin-bottom': '20px',
 	},
 });
 
 const CardPost = props => {
 	const classes = madeStyles();
+	const { user, post } = props;
+	console.log(user, post);
 	return (
-		<Card className={classes.root} raised>
+		<Card className={classes.card}>
 			<CardHeader
 				avatar={
-					<Avatar
-						src='https://64.media.tumblr.com/avatar_998358b1512b_64.pnj'
-						variant='rounded'
-					>
+					<Avatar src='' variant='rounded' alt={user.username}>
 						B
 					</Avatar>
 				}
@@ -37,51 +48,41 @@ const CardPost = props => {
 						<MoreVert />
 					</IconButton>
 				}
-				title='Some User'
-			/>
-			<CardMedia
-				component='img'
-				src='https://64.media.tumblr.com/d57df59ee95a00cd64e1bad12972d67f/tumblr_pc2un27IF51wzvt9qo1_500.gifv'
-				width='540px'
+				title={user.username}
 			/>
 			<CardContent>
-				<Typography variant='body1'>This is a picture</Typography>
-				<Divider />
+				<Typography variant='body1'>{post.text}</Typography>
 			</CardContent>
 		</Card>
 	);
 };
 
+CardPost.defaultProps = {
+	user: {},
+	post: {},
+};
+
 export default props => {
+	const dispatch = useDispatch();
 	const classes = madeStyles();
 
+	useEffect(() => {
+		dispatch(fetchUsers());
+		dispatch(fetchPosts());
+	}, []);
+
+	const users = useSelector(state => state.users);
+	const posts = useSelector(state =>
+		Object.values(state.posts).sort((a, b) => b.id - a.id)
+	);
+	console.log(users);
+
 	return (
-		<Card className={classes.root} raised>
-			<CardHeader
-				avatar={
-					<Avatar
-						src='https://64.media.tumblr.com/avatar_998358b1512b_64.pnj'
-						variant='rounded'
-					>
-						B
-					</Avatar>
-				}
-				action={
-					<IconButton>
-						<MoreVert />
-					</IconButton>
-				}
-				title='Some User'
-			/>
-			<CardMedia
-				component='img'
-				src='https://64.media.tumblr.com/d57df59ee95a00cd64e1bad12972d67f/tumblr_pc2un27IF51wzvt9qo1_500.gifv'
-				width='540px'
-			/>
-			<CardContent>
-				<Typography variant='body1'>This is a picture</Typography>
-				<Divider />
-			</CardContent>
-		</Card>
+		<div id='feed' className={classes.root}>
+			<PostForm className={classes.card} />
+			{posts.map(post => (
+				<CardPost key={post.id} post={post} user={users[post.userId]} />
+			))}
+		</div>
 	);
 };
