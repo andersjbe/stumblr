@@ -67,9 +67,10 @@ router.post(
 	'/',
 	upload.single('file'),
 	asyncHandler(async (req, res, next) => {
-		const { text, mediaTypeId, userId, parentId, originId } = req.body;
+		let { text, mediaTypeId, userId, parentId, originId } = req.body;
 		let mediaUrl = null;
-
+		mediaTypeId = parseInt(mediaTypeId);
+		// userId = parseInt(userId);
 		const mediaType = await MediaType.findByPk(mediaTypeId);
 
 		// console.log(mediaType)
@@ -78,10 +79,12 @@ router.post(
 			mediaType.type === 'video' ||
 			mediaType.type === 'audio'
 		) {
-			console.log(req)
+			// console.log(req);
 			mediaUrl = req.file.location;
 		}
 
+		console.log(typeof userId, userId);
+		console.log(mediaTypeId);
 
 		const post = await Post.create({
 			text,
@@ -92,7 +95,8 @@ router.post(
 			originId,
 		});
 
-		res.json(post);
+		const imageUrl = process.env.REACT_APP_IMAGE_URL || process.env.NODE_ENV === 'production' ? 'https://stumblr-andersjbe.herokuapp.com/' : 'http://localhost:3001';
+		res.redirect(imageUrl)
 	})
 );
 

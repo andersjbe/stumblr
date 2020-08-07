@@ -2,37 +2,136 @@ import { postPost } from './store/posts';
 import { imageUrl } from './config';
 
 import React, { useState } from 'react';
-import { Card, CardContent, TextField, Button, Paper } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import {
+	Card,
+	CardContent,
+	TextField,
+	IconButton,
+	DialogTitle,
+	makeStyles,
+	Dialog,
+	Button,
+	DialogContent,
+} from '@material-ui/core';
 import { useDropzone } from 'react-dropzone';
+import {
+	VideoCall,
+	Headset,
+	TextFields,
+	CropOriginal,
+} from '@material-ui/icons';
 
-export default () => {
+const FormIcon = ({ icon, text, mediaTypeId }) => {
+	const [open, setOpen] = useState(false);
 	const [textBody, setTextBody] = useState('');
-	const [file, setFile] = useState({});
 	const userId = useSelector(state => state.auth.currentUserId);
-	const dispatch = useDispatch();
+	console.log('user: ', userId);
+	let accepts = '';
+	if (mediaTypeId === 2) {
+		accepts = 'image/*';
+	} else if (mediaTypeId === 3) {
+		accepts = 'video/*';
+	} else if (mediaTypeId === 4) {
+		accepts = 'audio/*';
+	}
 
-	const { getRootProps, getInputProps } = useDropzone();
-	const { ref, ...rootProps } = getRootProps();
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
-	const onSubmit = async e => {
-		e.preventDefault();
-
-		const body = {
-			userId,
-			text: textBody,
-			mediaTypeId: 2,
-			file,
-		};
-
-		dispatch(postPost(body));
-		setTextBody('');
+	const handleClose = () => {
+		setOpen(false);
 	};
 
 	return (
+		<span onClick={handleClickOpen}>
+			<IconButton onClick={handleClickOpen}>{icon}</IconButton>
+			<Dialog open={open} onClose={handleClose}>
+				<DialogTitle>{text}</DialogTitle>
+				<DialogContent>
+					<form
+						method='post'
+						action={`${imageUrl}/api/posts`}
+						encType='multipart/form-data'
+						onSubmit={e => <Redirect to='/dashboard' />}
+					>
+						<TextField
+							multiline
+							onChange={e => setTextBody(e.target.value)}
+							name='text'
+							value={textBody}
+							required={mediaTypeId === 1 ? true : false}
+						/>
+						<input type='hidden' name='mediaTypeId' value={mediaTypeId} />
+						<input type='hidden' name='userId' value={userId} />
+						{mediaTypeId === 1 ? null : (
+							<input
+								type='file'
+								name='file'
+								accept={accepts}
+								required={mediaTypeId !== 1 ? true : false}
+							/>
+						)}
+						<Button type='submit'>Post</Button>
+					</form>
+				</DialogContent>
+			</Dialog>
+		</span>
+	);
+};
+
+FormIcon.defaultProps = {
+	icon: null,
+	text: '',
+	mediaTypeId: 1,
+};
+
+export default () => {
+	const { getRootProps, getInputProps } = useDropzone();
+	const { ref, ...rootProps } = getRootProps();
+
+	const styles = makeStyles({
+		root: {
+			display: 'grid',
+			gridTemplateColumns: ' 1fr 1fr 1fr 1fr',
+			gridTemplateRows: '1fr',
+		},
+	});
+
+	const classes = styles();
+
+	return (
 		<Card id='create-post' style={{ maxWidth: '420px', margin: '20px' }}>
-			<CardContent>
-				<form
+			<CardContent className={classes.root}>
+				<FormIcon
+					icon={<TextFields style={{ fontSize: '50px' }} />}
+					text='Text'
+					mediaTypeId={1}
+				/>
+				<FormIcon
+					icon={<CropOriginal style={{ fontSize: '50px' }} />}
+					text='Image'
+					mediaTypeId={2}
+				/>
+				<FormIcon
+					icon={<VideoCall style={{ fontSize: '50px' }} />}
+					text='Video'
+					mediaTypeId={3}
+				/>
+				<FormIcon
+					icon={<Headset style={{ fontSize: '50px' }} />}
+					text='Audio'
+					mediaTypeId={4}
+				/>
+			</CardContent>
+		</Card>
+	);
+};
+
+{
+	/* <form
 					method='post'
 					action={`${imageUrl}/api/posts`}
 					encType='multipart/form-data'
@@ -45,7 +144,7 @@ export default () => {
 						required
 					/>
 					<input type='hidden' name='mediaTypeId' value={2} />
-					<input type='hidden' name='userId' value={userId}/>
+					<input type='hidden' name='userId' value={userId} />
 					<input
 						type='file'
 						name='file'
@@ -54,8 +153,5 @@ export default () => {
 						}
 					/>
 					<Button type='submit'>Post</Button>
-				</form>
-			</CardContent>
-		</Card>
-	);
-};
+				</form> */
+}
