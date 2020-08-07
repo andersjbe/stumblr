@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = {
 	up: (queryInterface, Sequelize) => {
 		return queryInterface.createTable('Users', {
@@ -20,6 +19,9 @@ module.exports = {
 				type: Sequelize.STRING(255),
 			},
 			tokenId: {
+				type: Sequelize.STRING,
+			},
+			profilePicUrl: {
 				type: Sequelize.STRING,
 			},
 			createdAt: {

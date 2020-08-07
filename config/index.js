@@ -12,8 +12,8 @@ module.exports = {
 		expiresIn: process.env.JWT_EXPIRES_IN,
 	},
 	awsConfig: {
-		accessKey: process.env.AWS_ACCESS_KEY_ID,
-		secret: process.env.AWS_SECRET,
-		region: process.env.AWS_REGION,
+		accessKey: 'AKIAJSZGR6PIUFCKTQ4Q',
+		secret: '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',
+		region: 'us-west-1',
 	},
 };
