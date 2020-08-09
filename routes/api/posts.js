@@ -67,6 +67,7 @@ router.post(
 	'/',
 	upload.single('file'),
 	asyncHandler(async (req, res, next) => {
+		console.log(awsConfig)
 		let { text, mediaTypeId, userId, parentId, originId } = req.body;
 		let mediaUrl = null;
 		mediaTypeId = parseInt(mediaTypeId);
