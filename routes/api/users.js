@@ -55,7 +55,7 @@ router.post(
 		const { jti, token } = createToken(user);
 		user.tokenId = jti;
 		await user.save();
-		res.json({ token, user: {} });
+		res.json({ token, user: {} }); 
 	})
 );
 
