@@ -90,4 +90,8 @@ router.post(
 	})
 );
 
+router.post('/follow', asyncHandler((req, res) => {
+	const { followerUd, followingId } = req.body
+}))
+
 module.exports = router;

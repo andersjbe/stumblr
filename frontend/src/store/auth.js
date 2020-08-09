@@ -33,6 +33,7 @@ export const signup = (username, password) => async dispatch => {
 	if (res.ok) {
 		const data = await res.json();
 		window.localStorage.setItem(TOKEN_KEY, data.token);
+		window.localStorage.setItem(USER_KEY, data.userId);
 		dispatch(setToken(data.token, data.userId));
 	}
 };
