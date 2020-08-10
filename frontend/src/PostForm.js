@@ -1,4 +1,3 @@
-import { postPost } from './store/posts';
 import { imageUrl } from './config';
 
 import React, { useState } from 'react';
@@ -15,7 +14,7 @@ import {
 	Button,
 	DialogContent,
 } from '@material-ui/core';
-import { useDropzone } from 'react-dropzone';
+// import { useDropzone } from 'react-dropzone';
 import {
 	VideoCall,
 	Headset,
@@ -27,7 +26,7 @@ const FormIcon = ({ icon, text, mediaTypeId }) => {
 	const [open, setOpen] = useState(false);
 	const [textBody, setTextBody] = useState('');
 	const userId = useSelector(state => state.auth.currentUserId);
-	console.log('user: ', userId);
+	
 	let accepts = '';
 	if (mediaTypeId === 2) {
 		accepts = 'image/*';
@@ -89,8 +88,8 @@ FormIcon.defaultProps = {
 };
 
 export default () => {
-	const { getRootProps, getInputProps } = useDropzone();
-	const { ref, ...rootProps } = getRootProps();
+	// const { getRootProps } = useDropzone();
+	// const { ref } = getRootProps();
 
 	const styles = makeStyles({
 		root: {
@@ -103,7 +102,7 @@ export default () => {
 	const classes = styles();
 
 	return (
-		<Card id='create-post' style={{ maxWidth: '420px', margin: '20px' }}>
+		<Card id='create-post' style={{ maxWidth: '540px', 'marginBottom': '20px'}}>
 			<CardContent className={classes.root}>
 				<FormIcon
 					icon={<TextFields style={{ fontSize: '50px' }} />}
@@ -130,28 +129,3 @@ export default () => {
 	);
 };
 
-{
-	/* <form
-					method='post'
-					action={`${imageUrl}/api/posts`}
-					encType='multipart/form-data'
-				>
-					<TextField
-						multiline
-						onChange={e => setTextBody(e.target.value)}
-						name='text'
-						value={textBody}
-						required
-					/>
-					<input type='hidden' name='mediaTypeId' value={2} />
-					<input type='hidden' name='userId' value={userId} />
-					<input
-						type='file'
-						name='file'
-						onChange={e =>
-							Array.from(e.target.files).forEach(file => setFile(file))
-						}
-					/>
-					<Button type='submit'>Post</Button>
-				</form> */
-}

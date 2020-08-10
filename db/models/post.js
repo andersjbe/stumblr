@@ -16,9 +16,11 @@ module.exports = (sequelize, DataTypes) => {
 		Post.belongsTo(models.MediaType, { foreignKey: 'mediaTypeId' });
 		Post.belongsTo(models.User, { foreignKey: 'userId' });
 		Post.belongsTo(models.Post, { foreignKey: 'parentId' });
-    Post.belongsTo(models.Post, { foreignKey: 'originId' });
-    Post.hasMany(models.Post, { foreignKey: 'parentId' });
-    Post.hasMany(models.Post, { foreignKey: 'originId' })
+		Post.belongsTo(models.Post, { foreignKey: 'originId' });
+		Post.hasMany(models.Post, { foreignKey: 'parentId' });
+		Post.hasMany(models.Post, { foreignKey: 'originId' });
+
+		Post.hasMany(models.Like, { foreignKey: 'postId' });
 	};
 	return Post;
 };

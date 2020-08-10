@@ -1,4 +1,4 @@
-const { User } = require('../../db/models');
+const { User, Follow, Like } = require('../../db/models');
 const { authenticated, createToken } = require('../../utils/auth');
 
 const express = require('express');
@@ -21,16 +21,15 @@ const password = check('password')
 router.get(
 	'/',
 	asyncHandler(async (req, res) => {
-		const users = await User.findAll();
+		const users = await User.findAll({include: {model: User, as: 'followed'}});
 		// console.log(users)
 
 		const formatted = users.reduce((acc, user) => {
-
-			user = user.dataValues
+			user = user.dataValues;
 			// console.log(user)
-			acc[user.id] = { id: user.id, username: user.username, }
+			acc[user.id] = { id: user.id, username: user.username, profilePicUrl: user.profilePicUrl };
 			return acc;
-		}, {})
+		}, {});
 		res.json(formatted);
 	})
 );
@@ -55,7 +54,7 @@ router.post(
 		const { jti, token } = createToken(user);
 		user.tokenId = jti;
 		await user.save();
-		res.json({ token, user: {} }); 
+		res.json({ token, userId: user.id });
 	})
 );
 
@@ -90,8 +89,11 @@ router.post(
 	})
 );
 
-router.post('/follow', asyncHandler((req, res) => {
-	const { followerUd, followingId } = req.body
+
+router.post('/unfollow', asyncHandler(async (req, res) => {
+	const { followId } = req.body;
+	const follow = Follow.findByPk(followId);
+	await follow.destroy()
 }))
 
 module.exports = router;

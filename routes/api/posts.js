@@ -1,4 +1,4 @@
-const { Post, User, MediaType } = require('../../db/models');
+const { Post, User, MediaType, Like, Follow } = require('../../db/models');
 const { awsConfig } = require('../../config');
 
 const express = require('express');

@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const localToken = window.localStorage.getItem(TOKEN_KEY);
 const localUser = window.localStorage.getItem(USER_KEY);
