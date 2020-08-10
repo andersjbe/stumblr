@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { TextField, ButtonGroup, Button } from '@material-ui/core';
 
 export default props => {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
+	const [username, setUsername] = useState('demo');
+	const [password, setPassword] = useState('stumblr');
 	const dispatch = useDispatch();
 
 	const logIn = e => {
